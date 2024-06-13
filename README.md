@@ -45,6 +45,12 @@ __Reproject vector:__
 
 	ogr2ogr output.shp -t_srs "EPSG:4326" input.shp
 
+__Convert MULTIPOLYGON to POLYGON:__
+
+This assumes that `input.shp` has the largest part as the first geometry for every multipolygon. If not, parts need to be removed.
+
+	ogrinfo -dialect SQLite -sql "UPDATE input SET geometry = ST_GeometryN(geometry,1)" input.shp
+
 __Add an index to a shapefile__
 
 Add an index on an attribute:
