@@ -437,6 +437,63 @@ or
 
 This can be a useful way to quickly crop one raster to the same extent as another. Add these to your ~/.bash_profile file for easy terminal access.
 
+__From Bounding Box to Shapefile__  
+
+It is possible to create a Shapefile of a bounding box starting from simple geografic coordinates, without using a script. It can be done using
+and intermediate raster file to create without an initial data source:
+
+	gdal_create -outsize 100 100 -burn 1 -ot Byte -a_srs EPSG:4326 -a_ullr 15.027444 41.982819 16.282455 41.03043 bbox.tif
+ 	gdaltindex bbox.shp bbox.tif
+
+An alternative way is directly creating a GeoJSON with the 5 corners of the vertexes in a POLYGON.
+
+	cat >bbox.json <<EOF
+	{
+	  "type": "FeatureCollection",
+	  "name": "bbox",
+	  "crs": {
+	    "type": "name",
+	    "properties": {
+	      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+	    }
+	  },
+	  "features": [
+	    {
+	      "type": "Feature",
+	      "properties": {
+	        "location": "bbox"
+	      },
+	      "geometry": {
+	        "type": "Polygon",
+	        "coordinates": [
+	          [
+	            [
+	              15.027444,
+	              41.982819
+	            ],
+	            [
+	              16.282455,
+	              41.982819
+	            ],
+	            [
+	              16.282455,
+	              41.03043
+	            ],
+	            [
+	              15.027444,
+	              41.03043
+	            ],
+	            [
+	              15.027444,
+	              41.982819
+	            ]
+	          ]
+	        ]
+	      }
+	    }
+	  ]
+	}
+ 	EOF
 
 Sources
 ---
