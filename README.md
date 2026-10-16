@@ -1,4 +1,5 @@
-Cheat sheet for GDAL/OGR command-line geodata tools
+Cheat sheet for GDAL/OGR command-line geodata tools.
+This is not up to date; the whole content is now [on my wiki](https://lovergine.com/wiki/gdal.html)
 
 Vector operations
 ---
